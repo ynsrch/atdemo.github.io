@@ -17,7 +17,9 @@
       --text: #6c2143;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -58,14 +60,31 @@
     }
 
     @keyframes twinkle {
-      from { opacity: 0.2; transform: scale(0.65) rotate(0deg); }
-      to { opacity: 1; transform: scale(1.35) rotate(18deg); }
+      from {
+        opacity: 0.2;
+        transform: scale(0.65) rotate(0deg);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1.35) rotate(18deg);
+      }
     }
 
     @keyframes floatUp {
-      from { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-      15% { opacity: 0.9; }
-      to { transform: translateY(-15vh) rotate(220deg); opacity: 0; }
+      from {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.9;
+      }
+
+      to {
+        transform: translateY(-15vh) rotate(220deg);
+        opacity: 0;
+      }
     }
 
     .card {
@@ -81,8 +100,15 @@
     }
 
     @keyframes arrive {
-      from { opacity: 0; transform: translateY(24px) scale(0.97); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .small-title {
@@ -162,8 +188,13 @@
     }
 
     @keyframes glow {
-      from { text-shadow: 0 0 4px rgba(220, 93, 148, 0.15); }
-      to { text-shadow: 0 0 18px rgba(220, 93, 148, 0.8); }
+      from {
+        text-shadow: 0 0 4px rgba(220, 93, 148, 0.15);
+      }
+
+      to {
+        text-shadow: 0 0 18px rgba(220, 93, 148, 0.8);
+      }
     }
 
     .gift-link {
@@ -182,7 +213,9 @@
       transition: transform 0.2s ease, filter 0.2s ease;
     }
 
-    .gift-link.show { display: inline-block; }
+    .gift-link.show {
+      display: inline-block;
+    }
 
     .gift-link:hover {
       transform: translateY(-4px) scale(1.03);
@@ -219,7 +252,9 @@
       animation: reveal 0.6s ease both;
     }
 
-    .music-box.show { display: block; }
+    .music-box.show {
+      display: block;
+    }
 
     .music-box iframe {
       display: block;
@@ -229,13 +264,25 @@
     }
 
     @keyframes reveal {
-      from { opacity: 0; transform: translateY(15px) scale(0.94); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.94);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     @keyframes buttonPulse {
-      0%, 100% { box-shadow: 0 12px 28px rgba(184, 50, 104, 0.35); }
-      50% { box-shadow: 0 12px 40px rgba(184, 50, 104, 0.65); }
+      0%, 100% {
+        box-shadow: 0 12px 28px rgba(184, 50, 104, 0.35);
+      }
+
+      50% {
+        box-shadow: 0 12px 40px rgba(184, 50, 104, 0.65);
+      }
     }
 
     .hint {
@@ -249,8 +296,13 @@
     }
 
     @media (max-width: 480px) {
-      .countdown { gap: 7px; }
-      .time-box { padding: 16px 4px; }
+      .countdown {
+        gap: 7px;
+      }
+
+      .time-box {
+        padding: 16px 4px;
+      }
     }
   </style>
 </head>
@@ -361,14 +413,4 @@
 
     // 6 October 2026, 00:00 Morocco time (UTC+1). Add ?demo to the address for a 15-second test.
     const isDemo = new URLSearchParams(window.location.search).has("demo");
-    const target = isDemo
-      ? Date.now() + 15 * 1000
-      : new Date("2026-10-06T00:00:00+01:00").getTime();
-
-    const now = () => Date.now() + clockOffset;
-
-    async function syncClock() {
-      try {
-        const t0 = Date.now();
-        const res = await fetch(window.location.pathname + "?sync=" + t0, {
-          method: 
+    const target = isD
