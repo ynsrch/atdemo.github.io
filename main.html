@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#2b0a1a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root{
   --wine:#2b0a1a; --wine-2:#4a1230; --rose:#f4a8c4; --rose-deep:#e0608f;
@@ -181,6 +181,49 @@ main{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:28px 20p
 .final-message.show{max-height:520px;opacity:1;margin-top:30px;text-shadow:0 0 24px rgba(224,96,143,.6)}
 footer{text-align:center;margin-top:44px;font-family:"Great Vibes",cursive;font-size:1.8rem;color:var(--rose);line-height:1.6}
 
+
+/* One consistent Futura-style font across the entire website */
+body, button, input, textarea, select,
+h1, h2, h3, p, span, a, footer,
+.eyebrow, .intro, .signature, .final-message,
+.letter-panel p, .memory-card p, .letter-slide,
+.final-panel > p:not(.eyebrow):not(.final-message) {
+  font-family:"Jost","Futura",Arial,sans-serif !important;
+  font-style:normal !important;
+}
+
+/* Handwriting for content only — section titles remain Futura-style */
+.letter-panel p,
+.letter-slide,
+.memory-card p,
+.final-panel > p:not(.eyebrow):not(.final-message),
+.final-message,
+.signature {
+  font-family:"Caveat",cursive !important;
+  font-style:normal !important;
+  letter-spacing:.02em;
+}
+.letter-panel p{font-size:1.8rem;line-height:1.35}
+.letter-slide{font-size:1.65rem;line-height:1.35}
+.memory-card p{font-size:1.4rem;line-height:1.3}
+.final-panel > p:not(.eyebrow):not(.final-message){font-size:1.8rem;line-height:1.35}
+.final-message{font-size:2.2rem;line-height:1.3}
+.signature{font-size:2.5rem !important}
+
+/* Handwriting for envelope labels and opened message details */
+.envelope h3,
+.envelope-hint,
+.envelope-content p,
+.letter-slide,
+.letter-slide p {
+  font-family:"Caveat",cursive !important;
+  font-style:normal !important;
+  letter-spacing:.02em;
+}
+.envelope h3{font-size:1.7rem}
+.envelope-hint{font-size:1.3rem}
+.letter-slide,.letter-slide p{font-size:1.65rem;line-height:1.35}
+
 </style>
 </head>
 <body>
@@ -241,16 +284,16 @@ footer{text-align:center;margin-top:44px;font-family:"Great Vibes",cursive;font-
           <h2>Three little memories</h2>
           <div class="memory-list">
             <button class="memory-card" type="button">
-              <img class="memory-photo" src="images/memory1.jpg" alt="Awal mra" loading="lazy" onerror="this.style.display='none'">
-              <h3>Awal mra</h3><p>Awal mra bghitk hiya mlli cheftk w d7kti liya, w b9it kanchof fik.</p>
+              <img class="memory-photo" src="images/memory1.jpg" alt="awl mra" loading="lazy" onerror="this.style.display='none'">
+              <h3>awl mra</h3><p>awl mra bghitk hiya mli cheftk w d7kti liya, w b9it kanchof fik.</p>
             </button>
             <button class="memory-card" type="button">
-              <img class="memory-photo" src="images/memory2.jpg" alt="L7da mnsahach" loading="lazy" onerror="this.style.display='none'">
-              <h3>L7da mnsahach</h3><p>L7da 3mrni nsaha hiya fach khdit Instagram dyalki.</p>
+              <img class="memory-photo" src="images/memory2.jpg" alt="l7da mnsahach" loading="lazy" onerror="this.style.display='none'">
+              <h3>l7da mnsahach</h3><p>l7da 3mrni nsaha hiya fach khdit Instagram dyalki.</p>
             </button>
             <button class="memory-card" type="button">
-              <img class="memory-photo" src="images/memory3.jpg" alt="Mlli kanchofk" loading="lazy" onerror="this.style.display='none'">
-             <h3>Mlli kanchofk</h3><p>Mlli kanchofk, kan7ess b wa7d lfar7a b7al ila bnti 9dami.</p>
+              <img class="memory-photo" src="images/memory3.jpg" alt="mli kanchofk" loading="lazy" onerror="this.style.display='none'">
+             <h3>mli kanchofk</h3><p>mli kanchofk, kan7ess b wa7d lfar7a b7al ila bnti 9dami.</p>
             </button>
           </div>
         </section>
@@ -279,7 +322,9 @@ footer{text-align:center;margin-top:44px;font-family:"Great Vibes",cursive;font-
           <h2>Wa7d lmessage lik</h2>
           <p>Bghitki t7si bila nti mohima 3ndi, w bila kanbghiki. Nti kolchi 3ndi. Nti a7san insana 3rft; nti mama, bnti, s7bti, w kolchi 3ndi f had dnya.</p>
           <button class="primary-button" id="finalButton" type="button">7elli a5er surprise 🥺❤️‍🩹</button>
-          <p class="final-message" id="finalMessage">Wldki far7an 7it katkbri 9damo, katbghih, w kat3awnih ykon f wa7d lblasa m3ak li baghi ywsl liha.<br><br>Your gentleman 🥺❤️‍🩹</p>
+          <p class="final-message" id="finalMessage">Wldki far7an 7it katkbri 9damo, 
+            m3ah, w kaytmna ay l7da y3ichha tkoni m3ah fiha bach ycharkki lfr7a dyalo,
+            kn7bki 7it kat3awnini nkon f wa7d lblasa m3ak li baghi ywsl liha.<br><br>Your gentleman 🥺❤️‍🩹</p>
         </section>
       </div>
       <footer>Happy Birthday, kbida dyali. Dima bghit nchofk far7ana 🥺❤️‍🩹<br>dima anbghiki.</footer>
