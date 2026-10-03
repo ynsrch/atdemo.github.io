@@ -17,9 +17,7 @@
       --text: #6c2143;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -60,31 +58,14 @@
     }
 
     @keyframes twinkle {
-      from {
-        opacity: 0.2;
-        transform: scale(0.65) rotate(0deg);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1.35) rotate(18deg);
-      }
+      from { opacity: 0.2; transform: scale(0.65) rotate(0deg); }
+      to { opacity: 1; transform: scale(1.35) rotate(18deg); }
     }
 
     @keyframes floatUp {
-      from {
-        transform: translateY(110vh) rotate(0deg);
-        opacity: 0;
-      }
-
-      15% {
-        opacity: 0.9;
-      }
-
-      to {
-        transform: translateY(-15vh) rotate(220deg);
-        opacity: 0;
-      }
+      from { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      15% { opacity: 0.9; }
+      to { transform: translateY(-15vh) rotate(220deg); opacity: 0; }
     }
 
     .card {
@@ -100,15 +81,8 @@
     }
 
     @keyframes arrive {
-      from {
-        opacity: 0;
-        transform: translateY(24px) scale(0.97);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .small-title {
@@ -188,13 +162,8 @@
     }
 
     @keyframes glow {
-      from {
-        text-shadow: 0 0 4px rgba(220, 93, 148, 0.15);
-      }
-
-      to {
-        text-shadow: 0 0 18px rgba(220, 93, 148, 0.8);
-      }
+      from { text-shadow: 0 0 4px rgba(220, 93, 148, 0.15); }
+      to { text-shadow: 0 0 18px rgba(220, 93, 148, 0.8); }
     }
 
     .gift-link {
@@ -213,9 +182,7 @@
       transition: transform 0.2s ease, filter 0.2s ease;
     }
 
-    .gift-link.show {
-      display: inline-block;
-    }
+    .gift-link.show { display: inline-block; }
 
     .gift-link:hover {
       transform: translateY(-4px) scale(1.03);
@@ -252,9 +219,7 @@
       animation: reveal 0.6s ease both;
     }
 
-    .music-box.show {
-      display: block;
-    }
+    .music-box.show { display: block; }
 
     .music-box iframe {
       display: block;
@@ -264,25 +229,13 @@
     }
 
     @keyframes reveal {
-      from {
-        opacity: 0;
-        transform: translateY(15px) scale(0.94);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(15px) scale(0.94); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     @keyframes buttonPulse {
-      0%, 100% {
-        box-shadow: 0 12px 28px rgba(184, 50, 104, 0.35);
-      }
-
-      50% {
-        box-shadow: 0 12px 40px rgba(184, 50, 104, 0.65);
-      }
+      0%, 100% { box-shadow: 0 12px 28px rgba(184, 50, 104, 0.35); }
+      50% { box-shadow: 0 12px 40px rgba(184, 50, 104, 0.65); }
     }
 
     .hint {
@@ -296,13 +249,8 @@
     }
 
     @media (max-width: 480px) {
-      .countdown {
-        gap: 7px;
-      }
-
-      .time-box {
-        padding: 16px 4px;
-      }
+      .countdown { gap: 7px; }
+      .time-box { padding: 16px 4px; }
     }
   </style>
 </head>
@@ -428,15 +376,9 @@
         });
         const t1 = Date.now();
         const serverDate = res.headers.get("Date");
-        const age = parseInt(res.headers.get("Age") || "0", 10) || 0;
-        if (!serverDate) return;
-
-        const serverTime = new Date(serverDate).getTime() + age * 1000;
-        const offset = serverTime - (t0 + (t1 - t0) / 2);
-
-        // Only trust a correction between -2 hours and +2 hours
-        if (Number.isFinite(offset) && Math.abs(offset) < 2 * 60 * 60 * 1000) {
-          clockOffset = offset;
+        if (serverDate) {
+          const serverTime = new Date(serverDate).getTime();
+          clockOffset = serverTime - (t0 + (t1 - t0) / 2);
         }
       } catch (e) {
         clockOffset = 0;
@@ -445,8 +387,6 @@
 
     function updateCountdown() {
       const remaining = target - now();
-
-      if (!Number.isFinite(remaining)) return;
 
       if (remaining <= 0) {
         document.getElementById("days").textContent = "00";
@@ -476,10 +416,10 @@
       document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-    syncClock();
-    setInterval(syncClock, 5 * 60 * 1000);
+    syncClock().then(() => {
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    });
   </script>
 </body>
 </html>
