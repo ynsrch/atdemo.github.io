@@ -359,7 +359,7 @@
     // This is the exact requested target. No server clock or device clock correction is used.
     const isDemo = new URLSearchParams(window.location.search).has("demo");
     const target = isDemo
-      ? Date.now() + 15 * 1000
+      ? Date.now()
       : Date.parse("2026-10-06T00:00:00Z");
 
     function updateCountdown() {
