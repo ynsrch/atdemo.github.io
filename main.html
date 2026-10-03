@@ -171,10 +171,6 @@ footer{text-align:center;margin-top:44px;font-family:"Great Vibes",cursive;font-
 </style>
 </head>
 <body>
-  <audio id="bgMusic" loop preload="auto" aria-label="Background birthday music">
-    <source src="audio/ainsi_bas_la_vida.mp3" type="audio/mpeg">
-  </audio>
-
   <div class="stars" id="stars"></div>
   <div class="stars" id="shooters"></div>
   <div class="petals" id="petals"></div>
@@ -389,23 +385,6 @@ footer{text-align:center;margin-top:44px;font-family:"Great Vibes",cursive;font-
       $("finalMessage").classList.toggle("show");
       celebrate();
     });
-  
-    const bgMusic = document.getElementById("bgMusic");
-    let bgMusicStarted = false;
-
-    function startBackgroundMusic() {
-      if (bgMusicStarted) return;
-      bgMusic.volume = 0.5;
-      bgMusic.play().then(() => {
-        bgMusicStarted = true;
-      }).catch(() => {
-        bgMusicStarted = false;
-      });
-    }
-
-    document.addEventListener("click", startBackgroundMusic);
-    document.addEventListener("keydown", startBackgroundMusic);
-    document.addEventListener("touchstart", startBackgroundMusic, { passive: true });
-</script>
+  </script>
 </body>
 </html>
