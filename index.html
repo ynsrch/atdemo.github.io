@@ -348,56 +348,32 @@
 
     songButton.addEventListener("click", () => {
       musicBox.classList.toggle("show");
-
-      if (musicBox.classList.contains("show")) {
-        songButton.textContent = "Hadi song dyalna 🥺❤️‍🩹";
-      } else {
-        songButton.textContent = "Dghya… sme3i wa7d song katfakkerni fik ♫";
-      }
+      songButton.textContent = musicBox.classList.contains("show")
+        ? "Hadi song dyalna 🥺❤️‍🩹"
+        : "Dghya… sme3i wa7d song katfakkerni fik ♫";
     });
 
     let redirecting = false;
-    let clockOffset = 0;
 
-    // 6 October 2026, 00:00 Morocco time (UTC+1). Add ?demo to the address for a 15-second test.
+    // Morocco midnight: 6 October 2026 at 00:00, UTC+0.
+    // This is the exact requested target. No server clock or device clock correction is used.
     const isDemo = new URLSearchParams(window.location.search).has("demo");
     const target = isDemo
       ? Date.now() + 15 * 1000
-      : new Date("2026-10-06T00:00:00+01:00").getTime();
-
-    const now = () => Date.now() + clockOffset;
-
-    async function syncClock() {
-      try {
-        const t0 = Date.now();
-        const res = await fetch(window.location.pathname + "?sync=" + t0, {
-          method: "HEAD",
-          cache: "no-store"
-        });
-        const t1 = Date.now();
-        const serverDate = res.headers.get("Date");
-        if (serverDate) {
-          const serverTime = new Date(serverDate).getTime();
-          clockOffset = serverTime - (t0 + (t1 - t0) / 2);
-        }
-      } catch (e) {
-        clockOffset = 0;
-      }
-    }
+      : Date.parse("2026-10-06T00:00:00Z");
 
     function updateCountdown() {
-      const remaining = target - now();
+      const remaining = target - Date.now();
 
       if (remaining <= 0) {
         document.getElementById("days").textContent = "00";
         document.getElementById("hours").textContent = "00";
         document.getElementById("minutes").textContent = "00";
         document.getElementById("seconds").textContent = "00";
-
         document.getElementById("status").textContent =
           "3id milad sa3id a TiTa dyali 🥺❤️‍🩹 Lhadya dyalk wajda daba!";
-
         document.getElementById("giftLink").classList.add("show");
+
         if (!redirecting) {
           redirecting = true;
           setTimeout(() => window.location.replace("main.html"), 4000);
@@ -405,9 +381,9 @@
         return;
       }
 
-      const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+      const days = Math.floor(remaining / 86400000);
+      const hours = Math.floor((remaining / 3600000) % 24);
+      const minutes = Math.floor((remaining / 60000) % 60);
       const seconds = Math.floor((remaining / 1000) % 60);
 
       document.getElementById("days").textContent = String(days).padStart(2, "0");
@@ -416,10 +392,8 @@
       document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
     }
 
-    syncClock().then(() => {
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-    });
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
