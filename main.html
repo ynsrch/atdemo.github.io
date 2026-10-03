@@ -56,18 +56,19 @@ h1,h2,h3{font-family:"Playfair Display",serif;font-weight:500;line-height:1.15}
 @keyframes fall{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(var(--sway),110vh) rotate(540deg)}}
 .confetti-piece{
   position:fixed;
-  z-index:9999;
-  top:-24px;
+  z-index:99999;
+  display:block;
+  top:-30px;
   width:10px;
   height:16px;
   border-radius:2px;
   pointer-events:none;
-  will-change:transform,opacity;
-  animation:confetti-fall var(--fall-duration,3.6s) linear var(--fall-delay,0s) forwards;
+  opacity:1;
+  animation:confetti-fall var(--fall-duration,3s) linear var(--fall-delay,0s) forwards;
 }
 @keyframes confetti-fall{
-  from{opacity:1;transform:translate3d(0,0,0) rotate(0deg)}
-  to{opacity:0;transform:translate3d(var(--drift),115vh,0) rotate(var(--spin,720deg))}
+  0%{opacity:1;top:-30px;transform:translateX(0) rotate(0deg)}
+  100%{opacity:0;top:110vh;transform:translateX(var(--drift)) rotate(var(--spin,720deg))}
 }
 
 main{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:28px 20px 60px}
@@ -358,7 +359,6 @@ footer{text-align:center;margin-top:44px;font-family:"Great Vibes",cursive;font-
     }
 
     function celebrate() {
-      const box = $("confetti");
       const colors = ["#f3cf8e", "#f4a8c4", "#ffffff", "#e0608f", "#c9a7ff"];
 
       for (let i = 0; i < 80; i++) {
@@ -366,12 +366,12 @@ footer{text-align:center;margin-top:44px;font-family:"Great Vibes",cursive;font-
         c.className = "confetti-piece";
         c.style.left = rand(0, 100) + "vw";
         c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        c.style.setProperty("--drift", rand(-140, 140) + "px");
+        c.style.setProperty("--drift", rand(-180, 180) + "px");
         c.style.setProperty("--spin", rand(360, 1080) + "deg");
-        c.style.setProperty("--fall-duration", rand(2.8, 4.5) + "s");
-        c.style.setProperty("--fall-delay", rand(0, 0.45) + "s");
-        box.appendChild(c);
-        c.addEventListener("animationend", () => c.remove(), { once: true });
+        c.style.setProperty("--fall-duration", rand(2.5, 4) + "s");
+        c.style.setProperty("--fall-delay", rand(0, .35) + "s");
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 5000);
       }
     }
 
