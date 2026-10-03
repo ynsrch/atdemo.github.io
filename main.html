@@ -54,8 +54,21 @@ h1,h2,h3{font-family:"Playfair Display",serif;font-weight:500;line-height:1.15}
 
 .petal{position:absolute;top:-30px;width:12px;height:16px;border-radius:80% 0 80% 0;background:linear-gradient(135deg,#ffb3cf,#e0608f);opacity:.75;animation:fall linear infinite}
 @keyframes fall{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(var(--sway),110vh) rotate(540deg)}}
-.confetti-piece{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:confetti 3.6s ease-in forwards}
-@keyframes confetti{to{transform:translate(var(--drift),108vh) rotate(720deg);opacity:0}}
+.confetti-piece{
+  position:fixed;
+  top:-20px;
+  width:9px;
+  height:14px;
+  border-radius:2px;
+  pointer-events:none;
+  will-change:transform,opacity;
+  transform:translate3d(0,0,0);
+  animation:confetti-fall 3.6s linear forwards;
+}
+@keyframes confetti-fall{
+  0%{opacity:1;transform:translate3d(0,0,0) rotate(0deg)}
+  100%{opacity:0;transform:translate3d(var(--drift),110vh,0) rotate(720deg)}
+}
 
 main{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:28px 20px 60px}
 .screen{display:none;min-height:calc(100vh - 60px)}
@@ -354,7 +367,11 @@ footer{text-align:center;margin-top:44px;font-family:"Great Vibes",cursive;font-
         c.style.background = colors[Math.floor(Math.random() * colors.length)];
         c.style.setProperty("--drift", rand(-90, 90) + "px");
         c.style.animationDelay = rand(0, .5) + "s";
+        c.style.animationName = "none";
         box.appendChild(c);
+        requestAnimationFrame(() => {
+          c.style.animationName = "confetti-fall";
+        });
         setTimeout(() => c.remove(), 4200);
       }
     }
