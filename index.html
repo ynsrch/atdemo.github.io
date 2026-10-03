@@ -413,4 +413,73 @@
 
     // 6 October 2026, 00:00 Morocco time (UTC+1). Add ?demo to the address for a 15-second test.
     const isDemo = new URLSearchParams(window.location.search).has("demo");
-    const target = isD
+    const target = isDemo
+      ? Date.now() + 15 * 1000
+      : new Date("2026-10-06T00:00:00+01:00").getTime();
+
+    const now = () => Date.now() + clockOffset;
+
+    async function syncClock() {
+      try {
+        const t0 = Date.now();
+        const res = await fetch(window.location.pathname + "?sync=" + t0, {
+          method: "HEAD",
+          cache: "no-store"
+        });
+        const t1 = Date.now();
+        const serverDate = res.headers.get("Date");
+        const age = parseInt(res.headers.get("Age") || "0", 10) || 0;
+        if (!serverDate) return;
+
+        const serverTime = new Date(serverDate).getTime() + age * 1000;
+        const offset = serverTime - (t0 + (t1 - t0) / 2);
+
+        // Only trust a correction between -2 hours and +2 hours
+        if (Number.isFinite(offset) && Math.abs(offset) < 2 * 60 * 60 * 1000) {
+          clockOffset = offset;
+        }
+      } catch (e) {
+        clockOffset = 0;
+      }
+    }
+
+    function updateCountdown() {
+      const remaining = target - now();
+
+      if (!Number.isFinite(remaining)) return;
+
+      if (remaining <= 0) {
+        document.getElementById("days").textContent = "00";
+        document.getElementById("hours").textContent = "00";
+        document.getElementById("minutes").textContent = "00";
+        document.getElementById("seconds").textContent = "00";
+
+        document.getElementById("status").textContent =
+          "3id milad sa3id a TiTa dyali 🥺❤️‍🩹 Lhadya dyalk wajda daba!";
+
+        document.getElementById("giftLink").classList.add("show");
+        if (!redirecting) {
+          redirecting = true;
+          setTimeout(() => window.location.replace("main.html"), 4000);
+        }
+        return;
+      }
+
+      const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+      const seconds = Math.floor((remaining / 1000) % 60);
+
+      document.getElementById("days").textContent = String(days).padStart(2, "0");
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    syncClock();
+    setInterval(syncClock, 5 * 60 * 1000);
+  </script>
+</body>
+</html>
