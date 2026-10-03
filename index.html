@@ -355,12 +355,9 @@
 
     let redirecting = false;
 
-    // Morocco midnight: 6 October 2026 at 00:00, UTC+0.
-    // This is the exact requested target. No server clock or device clock correction is used.
-    const isDemo = new URLSearchParams(window.location.search).has("demo");
-    const target = isDemo
-      ? Date.now()
-      : Date.parse("2026-10-06T00:00:00Z");
+    // Real release time: 3 October 2026 at 18:08 in Morocco.
+    // This uses the browser's current clock and the fixed Morocco UTC+1 offset.
+    const target = Date.parse("2026-10-03T17:08:00Z");
 
     function updateCountdown() {
       const remaining = target - Date.now();
